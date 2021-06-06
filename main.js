@@ -12,7 +12,7 @@ let baselayers = {
     ]),
 };
 
-// Karte initialisieren und auf Wiens Wikipedia Koordinate blicken
+// Karte initialisieren und auf Oesterreichs Wikipedia Koordinate blicken
 let map = L.map("map", {
     fullscreenControl: true,
     center: [47.59397, 14.12456],
