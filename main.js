@@ -1,4 +1,4 @@
-//basemap Hintergruende definieren
+//basemap Hintergruende definieren; eigentlich sollte nur ein Layer bei map instantiation geladen werden, die anderen sollten in der layercontrol stehen
 
 let baselayers = {
     standard: L.tileLayer.provider("BasemapAT.basemap"),
@@ -61,7 +61,7 @@ fetch(awsUrl)
             ]);
 
             marker.bindPopup(`
-            <h3>${station.BUNDESLAENDER.BADEGEWAESSER.BADEGEWAESSERNAME}</h3>`);
+            <h3>${station.BUNDESLAENDER.BADEGEWAESSER[0].BADEGEWAESSERNAME}</h3>`);
             marker.addTo(overlays.stations);
 
         }});
