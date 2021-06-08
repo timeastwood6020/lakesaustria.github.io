@@ -1,5 +1,9 @@
 let basemapGray = L.tileLayer.provider('BasemapAT.grau');
 
+let overlays = {
+    bathingSpot: L.featureGroup()
+};
+
 let map = L.map("map", {
     fullscreenControl: true,
     center: [48.208333, 16.373056],
@@ -12,7 +16,11 @@ let map = L.map("map", {
 
 let layerControl = L.control.layers({
     "BasemapAT.grau": basemapGray
+}, {
+    "Badestelle": overlays.bathingSpot
 }).addTo(map);
+
+overlays.bathingSpot.addTo(map);
 
 let drawBathingSpot = (geojsonData) => {
     L.geoJson(geojsonData, {
@@ -27,7 +35,7 @@ let drawBathingSpot = (geojsonData) => {
                 })
             })
         }
-    }).addTo(map);
+    }).addTo(overlays.bathingSpot);
 }
 
 for (let config of OGDWIEN) {
