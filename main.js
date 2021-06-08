@@ -80,6 +80,15 @@ fetch(dummyUrl)
                     lakestation.LATITUDE,
                     lakestation.LONGITUDE,
                 ]);
+                marker.bindPopup(`
+                <h3>${lakestation.BADEGEWAESSERNAME}</h3>
+                <ul>
+                    <li>Akuellstes Messdatum: ${waterMonitoring(lakestation.MESSWERTE)}</li>
+                    <li>Versuch Messdatum: ${lakestation.MESSWERTE[0]['D']}</li>
+                </ul>`)
+                //console.log(waterMonitoring(lakestation.MESSWERTE));
+
+
                 marker.addTo(overlays.stations);
             }
 
@@ -87,6 +96,11 @@ fetch(dummyUrl)
 
     })
 
+let waterMonitoring = (waterData) => {
+    for (waterDataSingle of waterData) {
+        return waterDataSingle.D; 
+    }
+}
 
 /*
 fetch(awsUrl)
