@@ -80,14 +80,14 @@ fetch(dummyUrl)
 
                 marker.addTo(overlays.stations);
 
-                if (typeof lakestation.MESSWERTE[0]['W'] == "number") {
+             /*   if (typeof lakestation.MESSWERTE[0]['W'] == "number") {
                     let marker = newLabel(lakestation, {
                         value: lakestation.MESSWERTE[0]['W'].toFixed(0),
                         colors: COLORS.temperature,
                         station: lakestation.BADEGEWAESSERNAME
                     });
                     marker.addTo(overlays.waterTemperature); 
-                }
+                } */
             }
 
         }
