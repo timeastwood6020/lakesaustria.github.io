@@ -14,10 +14,8 @@ let layerControl = L.control.layers({
     "BasemapAT.grau": basemapGray
 }).addTo(map);
 
-fetch("data/BADESTELLENOGD.json")
-.then(response => response.json())
-.then(stations => {
-    L.geoJson(stations, {
+let drawBathingSpot = (geojsonData) => {
+    L.geoJson(geojsonData, {
         onEachFeature: (feature, layer) => {
             layer.bindPopup(feature.properties.BEZEICHNUNG)
         },
@@ -30,4 +28,14 @@ fetch("data/BADESTELLENOGD.json")
             })
         }
     }).addTo(map);
-})
+}
+
+for (let config of OGDWIEN) {
+    fetch(config.data)
+        .then(response => response.json())
+        .then(geojsonData => {
+            if (config.title == "Badestellen Standorte Wien") {
+                drawBathingSpot(geojsonData);
+            }
+        })
+}
