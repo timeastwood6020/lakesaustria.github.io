@@ -74,7 +74,7 @@ fetch(dummyUrl)
                     <li>Sichttiefe: ${lakestation.MESSWERTE[0]['S']} m</li>
                     <li>Badegewässerqualität: ${waterQualityMonitoring(waterbodyQuality)}</li>
                 </ul>`)
-                
+
                 //console.log(waterMonitoring(lakestation.MESSWERTE));
 
 
@@ -84,6 +84,18 @@ fetch(dummyUrl)
         }
 
     })
+
+let getColor = (value, colorRamp) => {
+    for (let rule of colorRamp) {
+        if (value >= rule.min && value < rule.max) {
+            return rule.col;
+        }
+    }
+    return "black";
+};
+
+
+
 //Function fuer Loop durch Messwerte, gibt aktuellsten Wert für Datum zurueck weil anfangs Schwierigkeiten mit Auslese von Messwerten, nicht notwendig. Funktionert aber
 let waterMonitoring = (waterData) => {
     for (waterDataSingle of waterData) {
@@ -104,6 +116,8 @@ let waterQualityMonitoring = (waterQuality) => {
         return "?"
     }
 }
+
+
 
 //Minimap Plugin
 var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
