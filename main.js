@@ -45,23 +45,9 @@ let layerControl = L.control.layers({
     collapsed: false
 }).addTo(map);
 
-//Versuch über Function, die WasserStationen einzeichnet, funktioniert nicht    
-let drawWaterStation = (geojsonData) => {
-    L.geoJson(geojsonData, {
-        onEachFeature: (feature, layer) => {
-            layer.bindPopup(`<strong>${feature.BADEGEWAESSER.BADEGEWAESSERNAME}</strong>
-                <hr>
-                Station: ${feature.BADEGEWAESSER.BADEGEWAESSERNAME}`)
-        },
-        pointToLayer: (geoJsonPoint, latlng) => {
-            return L.marker(latlng)
-        }
-    }).addTo(overlays.stations);
-}
+
 //Daten aus JSON File auslesen und auf map darstellen
 
-//for (let config of BADEGEWAESSER) {
-//console.log("Config: ", config.data);
 
 let dummyUrl = 'data/badegewaesser_db.json';
 
@@ -71,7 +57,7 @@ let dummyUrl = 'data/badegewaesser_db.json';
 fetch(dummyUrl)
     .then(response => response.json())
     .then(json => {
-       // console.log("Data: ", json.BUNDESLAENDER);
+        // console.log("Data: ", json.BUNDESLAENDER);
         for (station of json.BUNDESLAENDER) {
             //console.log("Badegewässer: ", station.BADEGEWAESSER);
             for (lakestation of station.BADEGEWAESSER) {
@@ -81,7 +67,7 @@ fetch(dummyUrl)
                     lakestation.LONGITUDE,
                 ]);
 
-                let waterbodyQuality = lakestation.MESSWERTE[0]['A']; 
+                let waterbodyQuality = lakestation.MESSWERTE[0]['A'];
 
                 marker.bindPopup(`
                 <h3>${lakestation.BADEGEWAESSERNAME}</h3>
@@ -103,14 +89,14 @@ fetch(dummyUrl)
 //Function fuer Loop durch Messwerte, gibt aktuellsten Wert für Datum zurueck weil anfangs Schwierigkeiten mit Auslese von Messwerten, nicht notwendig. Funktionert aber
 let waterMonitoring = (waterData) => {
     for (waterDataSingle of waterData) {
-        return waterDataSingle.D; 
+        return waterDataSingle.D;
     }
 }
-
+//Function fuer sprechende Ausgabe der Badegewässerqualität
 let waterQualityMonitoring = (waterQuality) => {
     if (waterQuality == 1) {
         return "Ausgezeichnet";
-    } else if (waterQuality ==2) {
+    } else if (waterQuality == 2) {
         return "Gut";
     } else if (waterQuality == 3) {
         return "Mangelhaft";
@@ -120,23 +106,3 @@ let waterQualityMonitoring = (waterQuality) => {
         return "?"
     }
 }
-
-/*
-fetch(awsUrl)
-    .then(response => response.json())
-    .then(json => {
-        //  console.log('Daten konvertiert: ', json);
-        for (station of json.features) {
-            //console.log('Station: ', station);
-            //https://leafletjs.com/reference-1.7.1.html#marker
-            let marker = L.marker([
-                station.BUNDESLAENDER.BADEGEWAESSER[0].LATITUDE,
-                station.BUNDESLAENDER.BADEGEWAESSER[0].LONGITUDE
-            ]);
-
-            marker.bindPopup(`
-            <h3>${station.BUNDESLAENDER.BADEGEWAESSER[0].BADEGEWAESSERNAME}</h3>`);
-            marker.addTo(overlays.stations);
-
-        }});
-        */
