@@ -1,6 +1,5 @@
 const COLORS = {
     temperature: [{
-    }, {
         min: -99,
         max: 0,
         col: "#8fffff"
