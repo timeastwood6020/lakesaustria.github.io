@@ -80,11 +80,16 @@ fetch(dummyUrl)
                     lakestation.LATITUDE,
                     lakestation.LONGITUDE,
                 ]);
+
+                let waterbodyQuality = lakestation.MESSWERTE[0]['A']; 
+
                 marker.bindPopup(`
                 <h3>${lakestation.BADEGEWAESSERNAME}</h3>
                 <ul>
-                    <li>Akuellstes Messdatum: ${waterMonitoring(lakestation.MESSWERTE)}</li>
-                    <li>Versuch Messdatum: ${lakestation.MESSWERTE[0]['D']}</li>
+                    <li>Aktuellstes Messdatum: ${lakestation.MESSWERTE[0]['D']}</li>
+                    <li>Wassertemperatur: ${lakestation.MESSWERTE[0]['W']} °C</li>
+                    <li>Sichttiefe: ${lakestation.MESSWERTE[0]['S']} m</li>
+                    <li>Badegewässerqualität: ${waterQualityMonitoring(waterbodyQuality)}</li>
                 </ul>`)
                 //console.log(waterMonitoring(lakestation.MESSWERTE));
 
@@ -95,10 +100,24 @@ fetch(dummyUrl)
         }
 
     })
-
+//Function fuer Loop durch Messwerte, gibt aktuellsten Wert für Datum zurueck weil anfangs Schwierigkeiten mit Auslese von Messwerten, nicht notwendig. Funktionert aber
 let waterMonitoring = (waterData) => {
     for (waterDataSingle of waterData) {
         return waterDataSingle.D; 
+    }
+}
+
+let waterQualityMonitoring = (waterQuality) => {
+    if (waterQuality == 1) {
+        return "Ausgezeichnet";
+    } else if (waterQuality ==2) {
+        return "Gut";
+    } else if (waterQuality == 3) {
+        return "Mangelhaft";
+    } else if (waterQuality == 4) {
+        return "Vom Baden wird abgeraten"
+    } else {
+        return "?"
     }
 }
 
