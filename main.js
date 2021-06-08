@@ -79,15 +79,16 @@ fetch(dummyUrl)
 
 
                 marker.addTo(overlays.stations);
-
-             /*   if (typeof lakestation.MESSWERTE[0]['W'] == "number") {
+                //console.log("Data: ", lakestation.MESSWERTE[0]['W']);
+                //console.log("Name: ", lakestation.BADEGEWAESSERNAME);
+                if (lakestation.MESSWERTE[0]['W'] != false) {
                     let marker = newLabel(lakestation, {
                         value: lakestation.MESSWERTE[0]['W'].toFixed(0),
                         colors: COLORS.temperature,
                         station: lakestation.BADEGEWAESSERNAME
                     });
                     marker.addTo(overlays.waterTemperature); 
-                } */
+                } 
             }
 
         }
@@ -109,7 +110,7 @@ let newLabel = (coords, options) => {
         html: `<div style="background-color:${color}">${options.value}</div>`,
         className: "text-label"
     })
-    let marker = L.marker([coords[5], coords[4]], {
+    let marker = L.marker(coords['Latitude'], coords['Longitude'], {
         icon: label,
         title: `${options.station}`
     });
