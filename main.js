@@ -65,18 +65,22 @@ let drawWaterStation = (geojsonData) => {
 
 let dummyUrl = 'data/badegewaesser_db.json';
 
+//Marker auf Karte einzeichnen, Struktur Daten Bundeslaender-Array aus Bundesland-Objekt welches Name Key-Value Pair und Gewaesser-Array aus Badegewasser-Objekten trägt; letzteres enthaelt Infos zum Badegewaesser
+//zwei Loops, um durch die Objekte zu loopen, quasi für jedes Bundesland soll für jedes Badegewässer die Seestation bzw. Koordinate angegebn werden
+//vielleicht geht es eleganter, die zwei for-loops funktionieren aber
 fetch(dummyUrl)
     .then(response => response.json())
     .then(json => {
-        console.log("Data: ", json.BUNDESLAENDER);
+       // console.log("Data: ", json.BUNDESLAENDER);
         for (station of json.BUNDESLAENDER) {
-            console.log("Badegewässer: ", station.BADEGEWAESSER);
+            //console.log("Badegewässer: ", station.BADEGEWAESSER);
             for (lakestation of station.BADEGEWAESSER) {
-                console.log("Gewässername: ", lakestation.BADEGEWAESSERNAME);
+                //console.log("Gewässername: ", lakestation.BADEGEWAESSERNAME);
                 let marker = L.marker([
-                    lakestation.BADEGEWAESSER.LATITUDE,
-                    lakestation.BADEGEWAESSER.LONGITUDE,
+                    lakestation.LATITUDE,
+                    lakestation.LONGITUDE,
                 ]);
+                marker.addTo(overlays.stations);
             }
 
         }
