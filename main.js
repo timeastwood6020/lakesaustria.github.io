@@ -77,6 +77,7 @@ fetch(dummyUrl)
                     <li>Sichttiefe: ${lakestation.MESSWERTE[0]['S']} m</li>
                     <li>Badegewässerqualität: ${waterQualityMonitoring(waterbodyQuality)}</li>
                 </ul>`)
+                
                 //console.log(waterMonitoring(lakestation.MESSWERTE));
 
 
@@ -106,3 +107,9 @@ let waterQualityMonitoring = (waterQuality) => {
         return "?"
     }
 }
+
+//Minimap Plugin
+var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
+    toggleDisplay: true,
+    minimized: false,
+}).addTo(map);
