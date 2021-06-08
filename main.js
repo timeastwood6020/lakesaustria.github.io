@@ -22,14 +22,10 @@ let map = L.map("map", {
     ]
 });
 
-let layerScale = L.control.scale({
-    maxwidth: 800,
-    metric: true,
-    imperial: false,
-}).addTo(map);
 
 let overlays = {
     stations: L.featureGroup(),
+    waterTemperature: L.featureGroup(),
 };
 
 let layerControl = L.control.layers({
@@ -41,6 +37,7 @@ let layerControl = L.control.layers({
     "basemap.at Orthofoto beschriftet": baselayers.ortho_overlay
 }, {
     "Messstation Seen Österreich": overlays.stations,
+    "Wassertemperatur": overlays.waterTemperature,
 }, {
     collapsed: false
 }).addTo(map);
@@ -112,4 +109,11 @@ let waterQualityMonitoring = (waterQuality) => {
 var miniMap = new L.Control.MiniMap(L.tileLayer.provider("BasemapAT.basemap"), {
     toggleDisplay: true,
     minimized: false,
+}).addTo(map);
+
+//Massstab fuer Karte
+let layerScale = L.control.scale({
+    maxwidth: 800,
+    metric: true,
+    imperial: false,
 }).addTo(map);
