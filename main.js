@@ -22,6 +22,22 @@ let map = L.map("map", {
     ]
 });
 
+let layerScale = L.control.scale({
+    maxwidth: 800,
+    metric: true,
+    imperial: false,
+}).addTo(map);
+
+let layerControl = L.control.layers({
+    "basemap.at Standard": baselayers.standard,
+    "basemap.at grau": baselayers.grau,
+    "basemap.at Relief": baselayers.terrain,
+    "basemap.at Oberfläche": baselayers.surface,
+    "basemap.at hochauflösend": baselayers.highdpi,
+    "basemap.at Orthofoto beschriftet": baselayers.ortho_overlay
+}).addTo(map);
+
+
 var awsUrl = 'https://www.ages.at/typo3temp/badegewaesser_db.json'
 
 fetch(awsUrl)
