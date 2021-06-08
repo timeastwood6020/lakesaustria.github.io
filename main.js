@@ -28,6 +28,10 @@ let layerScale = L.control.scale({
     imperial: false,
 }).addTo(map);
 
+let overlays = {
+    stations: L.featureGroup(),
+};
+
 let layerControl = L.control.layers({
     "basemap.at Standard": baselayers.standard,
     "basemap.at grau": baselayers.grau,
@@ -35,7 +39,9 @@ let layerControl = L.control.layers({
     "basemap.at Oberfläche": baselayers.surface,
     "basemap.at hochauflösend": baselayers.highdpi,
     "basemap.at Orthofoto beschriftet": baselayers.ortho_overlay
-}).addTo(map);
+    }, {
+        "Messstation Seen Österreich": overlays.stations,
+    }).addTo(map);
 
 
 var awsUrl = 'https://www.ages.at/typo3temp/badegewaesser_db.json'
@@ -53,6 +59,7 @@ fetch(awsUrl)
             ]);
 
             marker.bindPopup(`
-            <h3>${station.BUNDESLAENDER.BADEGEWAESSER.BADEGEWAESSERNAME}</h3>`);marker.addTo(overlays.stations);
+            <h3>${station.BUNDESLAENDER.BADEGEWAESSER.BADEGEWAESSERNAME}</h3>`);
+            marker.addTo(overlays.stations);
 
         }});
