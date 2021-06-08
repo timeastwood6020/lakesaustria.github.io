@@ -20,6 +20,14 @@ fetch("data/BADESTELLENOGD.json")
     L.geoJson(stations, {
         onEachFeature: (feature, layer) => {
             layer.bindPopup(feature.properties.BEZEICHNUNG)
+        },
+        pointToLayer: (geoJsonPoint, latlng) => {
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: 'icons/badestelle.png',
+                    iconSize: [39, 39]
+                })
+            })
         }
     }).addTo(map);
 })
