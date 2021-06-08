@@ -39,21 +39,51 @@ let layerControl = L.control.layers({
     "basemap.at Oberfläche": baselayers.surface,
     "basemap.at hochauflösend": baselayers.highdpi,
     "basemap.at Orthofoto beschriftet": baselayers.ortho_overlay
-    }, {
-        "Messstation Seen Österreich": overlays.stations,
-    }, {
-        collapsed: false
-    }).addTo(map);
+}, {
+    "Messstation Seen Österreich": overlays.stations,
+}, {
+    collapsed: false
+}).addTo(map);
 
-for (let config of BADEGEWAESSER) {
-    //console.log("Config: ", config.data);
-    fetch(config.data)
-        .then(response => response.json())
-        .then(geojsonData => {
-            console.log("Data: ", geojsonData);
-        })
-
+//Versuch über Function, die WasserStationen einzeichnet, funktioniert nicht    
+let drawWaterStation = (geojsonData) => {
+    L.geoJson(geojsonData, {
+        onEachFeature: (feature, layer) => {
+            layer.bindPopup(`<strong>${feature.BADEGEWAESSER.BADEGEWAESSERNAME}</strong>
+                <hr>
+                Station: ${feature.BADEGEWAESSER.BADEGEWAESSERNAME}`)
+        },
+        pointToLayer: (geoJsonPoint, latlng) => {
+            return L.marker(latlng)
+        }
+    }).addTo(overlays.stations);
 }
+//Daten aus JSON File auslesen und auf map darstellen
+
+//for (let config of BADEGEWAESSER) {
+//console.log("Config: ", config.data);
+
+let dummyUrl = 'data/badegewaesser_db.json';
+
+fetch(dummyUrl)
+    .then(response => response.json())
+    .then(json => {
+        console.log("Data: ", json.BUNDESLAENDER);
+        for (station of json.BUNDESLAENDER) {
+            console.log("Badegewässer: ", station.BADEGEWAESSER);
+            for (lakestation of station.BADEGEWAESSER) {
+                console.log("Gewässername: ", lakestation.BADEGEWAESSERNAME);
+                let marker = L.marker([
+                    lakestation.BADEGEWAESSER.LATITUDE,
+                    lakestation.BADEGEWAESSER.LONGITUDE,
+                ]);
+            }
+
+        }
+
+    })
+
+
 /*
 fetch(awsUrl)
     .then(response => response.json())
