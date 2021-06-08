@@ -41,6 +41,8 @@ let layerControl = L.control.layers({
     "basemap.at Orthofoto beschriftet": baselayers.ortho_overlay
     }, {
         "Messstation Seen Österreich": overlays.stations,
+    }, {
+        collapsed: false
     }).addTo(map);
 
 
