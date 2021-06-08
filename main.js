@@ -94,6 +94,18 @@ let getColor = (value, colorRamp) => {
     return "black";
 };
 
+let newLabel = (coords, options) => {
+    let color = getColor(options.value, options.colors)
+    let label = L.divIcon({
+        html: `<div style="background-color:${color}">${options.value}</div>`,
+        className: "text-label"
+    })
+    let marker = L.marker([coords[1], coords[0]], {
+        icon: label,
+        title: `${options.station} (${coords[2]}m)`
+    });
+    return marker;
+};
 
 
 //Function fuer Loop durch Messwerte, gibt aktuellsten Wert für Datum zurueck weil anfangs Schwierigkeiten mit Auslese von Messwerten, nicht notwendig. Funktionert aber
