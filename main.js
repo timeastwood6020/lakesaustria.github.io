@@ -45,9 +45,16 @@ let layerControl = L.control.layers({
         collapsed: false
     }).addTo(map);
 
+for (let config of BADEGEWAESSER) {
+    //console.log("Config: ", config.data);
+    fetch(config.data)
+        .then(response => response.json())
+        .then(geojsonData => {
+            console.log("Data: ", geojsonData);
+        })
 
-var awsUrl = 'https://www.ages.at/typo3temp/badegewaesser_db.json'
-
+}
+/*
 fetch(awsUrl)
     .then(response => response.json())
     .then(json => {
@@ -65,3 +72,4 @@ fetch(awsUrl)
             marker.addTo(overlays.stations);
 
         }});
+        */
