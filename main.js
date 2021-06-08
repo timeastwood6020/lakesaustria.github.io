@@ -81,7 +81,7 @@ fetch(dummyUrl)
                 marker.addTo(overlays.stations);
                 //console.log("Data: ", lakestation.MESSWERTE[0]['W']);
                 //console.log("Name: ", lakestation.BADEGEWAESSERNAME);
-                if (lakestation.MESSWERTE[0]['W'] != false) {
+                if (lakestation.MESSWERTE[0]['W']) {
                     let marker = newLabel(lakestation, {
                         value: lakestation.MESSWERTE[0]['W'].toFixed(0),
                         colors: COLORS.temperature,
@@ -110,7 +110,7 @@ let newLabel = (coords, options) => {
         html: `<div style="background-color:${color}">${options.value}</div>`,
         className: "text-label"
     })
-    let marker = L.marker(coords['Latitude'], coords['Longitude'], {
+    let marker = L.marker([coords['LATITUDE'], coords['LONGITUDE']], {
         icon: label,
         title: `${options.station}`
     });
